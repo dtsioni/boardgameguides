@@ -1,3 +1,15 @@
 =render 'shared/error_messages'
 -flash.each do |name, msg|
   =content_tag :div, msg, class: name
+%header{class:"navbar navbar-fixed-top navbar-inverse"}
+  %div{class:"nav"}
+    %div{class:"container"}
+      =link_to "Boardgame guides", '#', id: "logo"
+      %nav
+        %ul{class:"nav navbar-nav navbar-right"}
+          %li
+            =link_to "Home", "#"
+          %li
+            =link_to "Help", "#"
+          %li
+            =link_to "Sign in", "#"

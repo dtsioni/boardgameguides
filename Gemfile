@@ -54,4 +54,6 @@ end
 gem 'haml'
 gem 'cancan'
 gem 'bcrypt'
+gem 'bootstrap-sass'
+gem 'sass'
 
