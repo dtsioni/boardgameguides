@@ -53,4 +53,5 @@ end
 
 gem 'haml'
 gem 'cancan'
+gem 'bcrypt'
 
