@@ -1,0 +1,12 @@
+=form_for(:session, url: sessions_path, html:{class:"form-group"}) do |f|
+  %div{class:"form-group"}
+    =f.label :email
+    =f.text_field :email, class:"form-control", placeholder:"Email"
+  %div{class:"form-group"}
+    =f.label :password
+    =f.password_field :password, type: "password", class:"form-control", placeholder:"Password" 
+  =f.submit "Sign in", class: "btn btn-large btn-primary", class: "btn btn-primary", type:"submit"
+
+%p
+  New User?
+  =link_to "Sign up now!", signup_path

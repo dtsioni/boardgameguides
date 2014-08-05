@@ -17,9 +17,9 @@ class UsersController < ApplicationController
     @user.role = "author"
     respond_to do |format|
       if @user.save
-        redirect_to @user
+        format.html{redirect_to @user}
       else
-       render 'new'
+        format.html{render :new}
       end
     end
   end
