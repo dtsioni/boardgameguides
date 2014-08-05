@@ -1,16 +1,29 @@
+-provide(:title, @user.name)
 %h1
-  Showing User
   =@user.name
-%table
+%table{class:"table table-striped table-bordered table-hover table-condensed"}
   %thead
     %tr
+      %td
+        ID
+      %td
+        Username
       %td
         Email
       %td
         Role
-  %tbody
-    %tr
       %td
-        =@user.email
-      %td
-        =@user.role
+        Password Digest
+  %tbody    
+    %div
+      %tr
+        %td
+          =@user.id
+        %td
+          =@user.name
+        %td
+          =@user.email
+        %td
+          =@user.role.humanize
+        %td
+          =@user.password_digest

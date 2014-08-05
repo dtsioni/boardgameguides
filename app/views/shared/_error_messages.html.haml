@@ -1,11 +1,9 @@
 -if @user && @user.errors.any?
   %div{id:"error_explanation"}
-    %div{class:"alert alert-error"}
+    %div{class:""}
       The form contains
       =pluralize(@user.errors.count, "error")
-      \.    
-    %ul
+    %ul{class:""}
     -@user.errors.full_messages.each do |msg|
-      %li
-        *
+      %li        
         =msg

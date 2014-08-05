@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only:[:show]
+  before_action :set_user, only:[:show, :destroy]
 
   def show
   end
@@ -14,14 +14,23 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.role = "author"
     respond_to do |format|
       if @user.save
-        format.html{redirect_to @user}
+        redirect_to @user
       else
-        format.html{render :new}
+       render 'new'
       end
     end
   end
+
+  def destroy
+    name = @user.name
+    @user.destroy
+    respond_to do |format|
+      format.html{redirect_to users_path, notice: "#{name} was successfully destroyed."}
+    end
+  end  
 
   private
     def set_user

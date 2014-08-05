@@ -4,17 +4,24 @@
   %thead
     %tr
       %td
+        ID
+      %td
         Username
       %td
         Email
       %td
         Role
       %td
-        Password Digest
+        Delete
+      %td
+        Edit
+
   %tbody
     -@users.each do |user|
       %div
         %tr
+          %td
+            =link_to "#{user.id}", user
           %td
             =user.name
           %td
@@ -22,4 +29,6 @@
           %td
             =user.role.humanize
           %td
-            =user.password_digest
+            =link_to "Delete", user, method: :delete, data:{confirm:"Are you sure?"}
+          %td
+            =link_to "Edit", edit_user_path(user)
