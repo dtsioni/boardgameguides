@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140731144746) do
+ActiveRecord::Schema.define(version: 20140806152450) do
 
   create_table "documents", force: true do |t|
     t.datetime "created_at"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20140731144746) do
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["remember_token"], name: "index_users_on_remember_token"
 
   create_table "votes", force: true do |t|
     t.datetime "created_at"

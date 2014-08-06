@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   has_many :games
   has_many :documents
   has_many :guides
-
+  #validations
   validates_uniqueness_of :name
   before_save { self.email = email.downcase }
   validates :name, presence: true, length: {maximum: 20}
@@ -17,4 +17,18 @@ class User < ActiveRecord::Base
   has_secure_password
   validates :password, length: { minimum: 6 }, if: ->{password.present?}
   validates :role, presence: true
+  #remember_token
+  before_create :create_remember_token
+  def User.new_remember_token
+    SecureRandom.urlsafe_base64
+  end
+
+  def User.digest(token)
+    Digest::SHA1.hexdigest(token.to_s)
+  end
+
+  private
+    def create_remember_token
+      self.remember_token = User.digest(User.new_remember_token)
+    end
 end

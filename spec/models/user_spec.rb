@@ -14,6 +14,7 @@ describe User do
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:remember_token) }
 
   it { should be_valid}
   #presence
@@ -30,16 +31,13 @@ describe User do
   describe "when role is not present" do
     before {@user.role = " "}
     it {should_not be_valid}
-  end
-  #validations
+  end  
   #names
-
   describe "when name is too long" do
     before { @user.name = "a" * 21 }
     it { should_not be_valid }
   end
-  #emails
-  
+  #emails  
   describe "when email format is invalid" do
     it "should be invalid" do
       addresses = %w[user@foo,com user_at_foo.org example.user@foo.
@@ -104,5 +102,9 @@ describe User do
       specify { expect(user_for_invalid_password).to be_false }
     end
   end
-
+  #remember token
+  describe "remember token" do
+    before { @user.save }
+    its(:remember_token) { should_not be_blank }
+  end
 end

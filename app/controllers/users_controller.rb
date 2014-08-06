@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, only:[:show, :destroy]
+
+  before_action :set_user, only:[:show, :destroy]  
 
   def show
   end
@@ -17,7 +18,9 @@ class UsersController < ApplicationController
     @user.role = "author"
     respond_to do |format|
       if @user.save
+        sign_in @user
         format.html{redirect_to @user}
+        flash[:success] = "Welcome!"
       else
         format.html{render :new}
       end
@@ -30,14 +33,16 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html{redirect_to users_path, notice: "#{name} was successfully destroyed."}
     end
-  end  
-
+  end
+  
   private
+
     def set_user
       @user = User.find(params[:id])
     end
+
     def user_params
       params.require(:user).permit(:name, :email, :role, :rank, :password, :password_confirmation)
     end
-
+    
 end
