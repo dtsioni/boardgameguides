@@ -12,23 +12,28 @@
       %td
         Role
       %td
+        Update
+      %td
         Delete
       %td
         Edit
 
   %tbody
     -@users.each do |user|
-      %div
-        %tr
-          %td
-            =link_to "#{user.id}", user
-          %td
-            =user.name
-          %td
-            =user.email
-          %td
-            =user.role.humanize
-          %td
-            =link_to "Delete", user, method: :delete, data:{confirm:"Are you sure?"}
-          %td
-            =link_to "Edit", edit_user_path(user)
+      = form_for(user) do |f|
+        %div
+          %tr
+            %td
+              =link_to "#{user.id}", user
+            %td
+              =user.name
+            %td
+              =user.email
+            %td
+              = f.collection_select :role, User::ROLES, :to_s, :humanize
+            %td
+              = f.submit "Update Role"
+            %td
+              = link_to "Delete", user, method: :delete, data:{confirm:"Are you sure?"}
+            %td
+              = link_to "Edit", edit_user_path(user)

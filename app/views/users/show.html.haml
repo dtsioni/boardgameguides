@@ -1,29 +1,24 @@
 -provide(:title, @user.name)
 %h1
   =@user.name
-%table{class:"table table-striped table-bordered table-hover table-condensed"}
-  %thead
-    %tr
-      %td
-        ID
-      %td
-        Username
-      %td
-        Email
-      %td
-        Role
-      %td
-        Password Digest
-  %tbody    
-    %div
+.col-md-4
+  %table.table.table-striped.table-bordered.table-hover.table-condensed
+    %caption
+      %strong
+        Requests
+    %thead
       %tr
         %td
-          =@user.id
+          Score
         %td
-          =@user.name
+          Title
         %td
-          =@user.email
+          Game
+    %tbody
+      %tr
         %td
-          =@user.role.humanize
+          Content
         %td
-          =@user.password_digest
+          More content
+        %td
+          3 content

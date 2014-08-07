@@ -23,7 +23,10 @@
             %li 
               = link_to "Home", root_path
             %li
-              = link_to "#{current_user.name}", current_user            
+              = link_to "#{current_user.name}", current_user
+            -if can? :index, User
+              %li#admin_panel
+                =link_to "Admin Control Panel", users_path
             %li#fat-menu.dropdown
               %a.dropdown-toggle{href: "#", "data-toggle" => "dropdown"}
                 Account

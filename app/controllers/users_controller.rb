@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
 
-  before_action :set_user, only:[:show, :destroy]  
-
+  before_action :set_user, only:[:show, :destroy]
+  authorize_resource
+  skip_authorize_resource only:[:show, :create, :new]
   def show
   end
 
@@ -25,6 +26,9 @@ class UsersController < ApplicationController
         format.html{render :new}
       end
     end
+  end
+
+  def edit
   end
 
   def destroy
