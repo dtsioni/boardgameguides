@@ -1,0 +1,13 @@
+%h1
+  Editing
+  =@user.name
+
+=form_for(@user, :html => {:class => "form-group col-md-4 col-md-offset-4"}) do |f|
+  .form-group
+    =f.label :name
+    =f.text_field :name, class:"form-control", placeholder:"Username"
+  .form-group
+    =f.label :email
+    =f.text_field :email, class:"form-control", placeholder:"Email"  
+  
+  =f.submit "Submit", class: "btn btn-primary", type:"submit"

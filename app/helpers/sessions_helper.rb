@@ -11,6 +11,10 @@ module SessionsHelper
     @current_user = user
   end
 
+  def admin? user
+    user.role == "admin"
+  end
+
   def current_user
     remember_token = User.digest(cookies[:remember_token])
     @current_user ||= User.find_by(remember_token: remember_token)

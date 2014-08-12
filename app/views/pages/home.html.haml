@@ -2,15 +2,18 @@
   %row
     %h1 Welcome to Boardgame Guides!
   %row
-    %h2.top30.bottom30
-      This is the home page for
-      =link_to "Board Game Guides", root_path  
+    .top30.bottom30
+      %h2
+        This is the home page for
+        =link_to "Board Game Guides", root_path  
   -if !signed_in?
     %row
-      =link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary", id: "sign_up_home"
-    %row.top30
-      %br
-        Already a user?
-        =link_to "Sign in!", signin_path, id: "sign_in_home"
+      .top5
+        =link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary", id: "sign_up_home"
+    %row
+      .top5
+        %br
+          Already a user?
+          =link_to "Sign in!", signin_path, id: "sign_in_home"
 
   

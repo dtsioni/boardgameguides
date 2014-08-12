@@ -11,13 +11,20 @@ class Ability
 
       can :destroy, User
       can :update, User
-      can :show, User
       can :index, User
+
+      can :destroy, Game
+      can :update, Game
+      can :index, Game
 
     when "moderator"
 
       can :update, User
-      can :show, User
+
+      can :destroy, Game
+      can :update, Game
+      can :index, Game
+
 
     when "author"      
       #can update self   

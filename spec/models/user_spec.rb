@@ -37,6 +37,10 @@ describe User do
     before { @user.name = "a" * 21 }
     it { should_not be_valid }
   end
+  describe "when name is too short" do
+    before { @user.name = "a" * 2 }
+    it { should_not be_valid }
+  end
   #emails  
   describe "when email format is invalid" do
     it "should be invalid" do

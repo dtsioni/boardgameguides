@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :set_user, only:[:show, :destroy]
+  before_action :set_user, only:[:show, :destroy, :update, :edit]
   authorize_resource
   skip_authorize_resource only:[:show, :create, :new]
   def show
@@ -12,6 +12,8 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    #games partial
+    @games = Game.all
   end  
 
   def create
@@ -29,6 +31,19 @@ class UsersController < ApplicationController
   end
 
   def edit
+
+  end
+
+  def update
+    respond_to do |format|
+      if @user.update(user_params)
+        format.html {redirect_to @user}
+        flash[:success] = "User was successfully updated!"
+      else
+        format.html { render :edit }
+        flash.now[:error] = "User was not successfully updated."
+      end
+    end
   end
 
   def destroy

@@ -1,6 +1,9 @@
 -provide(:title, @user.name)
 %h1
   =@user.name
+-if admin? current_user
+  .center
+    =@user.role.humanize
 .col-md-4
   %table.table.table-striped.table-bordered.table-hover.table-condensed
     %caption

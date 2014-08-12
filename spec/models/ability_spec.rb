@@ -9,34 +9,13 @@ describe "User role" do
   before do
     ability = Ability.new(user)
     @example_user = User.new(name: "Example")
+    @example_game = FactoryGirl.create(:game)
   end
   #everyone
-
-  #moderator
-  describe "when moderator" do
-
-    before{ user.role = "moderator" }      
-    
-    #crud
-    describe "is destroying user" do      
-      it{ should_not be_able_to(:destroy, @example_user) }
-    end
-    describe "is updating user" do      
-      it{ should be_able_to(:update, @example_user) }
-    end
-    describe "is indexing users" do
-      it{ should_not be_able_to(:index, User)}
-    end
-    describe "is showing user" do
-      it{should be_able_to(:show, @example_user)}
-    end     
-
-  end
-
   describe "when admin" do       
 
     before { user.role = "admin" }
-   
+    #users
     describe "is destroying user" do
       it{ should be_able_to(:destroy, @example_user) }
     end
@@ -46,8 +25,45 @@ describe "User role" do
     describe "is indexing users" do
       it{ should be_able_to(:index, User)}
     end 
-    describe "is showing user" do
-      it{should be_able_to(:show, @example_user)}
+    
+    #games
+    describe "is destroying game" do
+      it{ should be_able_to(:destroy, @example_game) }
+    end
+    describe "is updating game" do
+      it{ should be_able_to(:update, @example_game) }
+    end
+    describe "is indexing game" do
+      it{ should be_able_to(:index, Game) }
+    end 
+
+
+  end
+
+  #moderator
+  describe "when moderator" do
+
+    before{ user.role = "moderator" }      
+    
+    #users
+    describe "is destroying user" do      
+      it{ should_not be_able_to(:destroy, @example_user) }
+    end
+    describe "is updating user" do      
+      it{ should be_able_to(:update, @example_user) }
+    end
+    describe "is indexing users" do
+      it{ should_not be_able_to(:index, User)}
+    end    
+    #games
+    describe "is destroying game" do
+      it{ should be_able_to(:destroy, @example_game) }
+    end
+    describe "is updating game" do 
+      it{ should be_able_to(:update, @example_game) }
+    end
+    describe "is indexing games" do
+      it{ should be_able_to(:index, Game) }
     end
 
   end
@@ -55,7 +71,7 @@ describe "User role" do
   describe "when author" do
 
     before { user.role = "author"}
-
+    #users
     describe "is destroying user" do
       it{ should_not be_able_to(:destroy, @example_user) }
     end
@@ -65,10 +81,17 @@ describe "User role" do
     end
     describe "is indexing users" do
       it{ should_not be_able_to(:index, User)}
-    end    
-    describe "is showing user" do
-      it{should be_able_to(:show, @example_user)}
-    end  
+    end
+    #games
+    describe "is destroying game" do
+      it{ should_not be_able_to(:destroy, @example_game) }
+    end
+    describe "is updating game" do
+      it{ should_not be_able_to(:update, @example_game) }
+    end
+    describe "is indexing games" do
+      it{ should_not be_able_to(:index, Game)}
+    end
 
   end
 

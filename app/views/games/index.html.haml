@@ -1,0 +1,37 @@
+%h1
+  Games
+%table.table.table-striped.table-bordered.table-hover.table-condensed
+  %thead
+    %tr
+      %td
+        ID
+      %td
+        User ID
+      %td
+        Name
+      %td
+        Description
+      %td
+        Delete
+      %td
+        Edit
+  %tbody
+    -@games.each do |game|
+      %div
+        %tr
+          %td
+            = game.id
+          -if game.user
+            %td
+              = "#{game.user.id} (#{game.user.name})"
+          -else
+            %td
+              = "#{game.user_id} (deleted) "
+          %td
+            = link_to game.name, game
+          %td
+            = game.body
+          %td
+            = link_to "Delete", game, method: :delete, data:{confirm:"Are you sure?"}, id: "delete_game_#{game.id}"
+          %td
+            = link_to "Edit", edit_game_path(game)
