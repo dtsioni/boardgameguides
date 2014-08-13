@@ -1,9 +1,27 @@
--if @user && @user.errors.any?
-  %div{id:"error_explanation"}
-    %div{class:""}
+- if @user && @user.errors.any?
+  #error_explanation
+    %div
       The form contains
       =pluralize(@user.errors.count, "error")
     %ul{class:""}
     -@user.errors.full_messages.each do |msg|
+      %li        
+        =msg
+- if @game && @game.errors.any?
+  #error_explanation
+    %div
+      The form contains
+      =pluralize(@game.errors.count, "error")
+    %ul{class:""}
+    -@game.errors.full_messages.each do |msg|
+      %li        
+        =msg
+- if @ticket && @ticket.errors.any?
+  #error_explanation
+    %div
+      The form contains
+      =pluralize(@ticket.errors.count, "error")
+    %ul{class:""}
+    -@ticket.errors.full_messages.each do |msg|
       %li        
         =msg

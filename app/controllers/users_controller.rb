@@ -11,9 +11,12 @@ class UsersController < ApplicationController
   end
 
   def index
+    #index is being used as admin control panel
     @users = User.all
     #games partial
     @games = Game.all
+    #tickets partial
+    @tickets = Ticket.all
   end  
 
   def create

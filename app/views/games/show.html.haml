@@ -3,3 +3,7 @@
   =@game.name
 %h2
   =@game.body
+=link_to "Add Ticket", new_game_ticket_path(@game), id: "add_request", class: "text-center col-md-4 col-md-offset-4"
+.top15
+= render template: 'tickets/index'
+    

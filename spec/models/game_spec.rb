@@ -47,4 +47,12 @@ describe Game do
 
   end
 
+  describe "when body is too long" do
+
+    before{ @game.body = "a" * 127 }
+    it{ should_not be_valid }
+
+  end
+
+
 end

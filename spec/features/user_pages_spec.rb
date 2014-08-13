@@ -196,7 +196,7 @@ describe "User pages" do
 
     end
 
-      it{should have_selector("li#add_game")}
+    it { should have_selector("li#add_game") }
 
     describe "as admin" do
 
@@ -234,6 +234,19 @@ describe "User pages" do
         before{visit root_path}
 
         it{should have_selector("li#admin_panel")}
+
+      end
+
+      describe "show game page" do
+
+        before do
+          @game = FactoryGirl.create(:game)
+          @ticket = FactoryGirl.create(:ticket)
+          @game.tickets << @ticket
+          visit game_path(@game)
+        end
+        it{ should have_selector("a#add_request") }
+        it{ should have_content("#{@ticket.name}") }
 
       end
 

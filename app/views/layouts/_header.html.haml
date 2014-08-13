@@ -1,7 +1,7 @@
-=render 'shared/error_messages'
-%div#error_explanation.center
-  -flash.each do |name, msg|
-    =content_tag :div, msg, class: name
+= render 'shared/error_messages'
+#error_explanation.center
+  - flash.each do |name, msg|
+    = content_tag :div, msg, class: name
 %header.navbar.navbar-fixed-top.navbar-default
   %div.nav
     %div.container
