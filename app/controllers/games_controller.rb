@@ -30,6 +30,7 @@ class GamesController < ApplicationController
   def index
     @games = Game.all
     @games.to_a.sort_by!{ |m| m.name.downcase }
+    #controller actions here are mirrored on home page
   end
 
   def destroy

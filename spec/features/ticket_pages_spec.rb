@@ -14,6 +14,7 @@ describe "Ticket pages" do
     fill_in "Email", with: @admin.email
     fill_in "Password", with: @admin.password
     click_button "Sign in"
+    @admin.tickets << @ticket
   end
  
   describe "show" do
@@ -74,24 +75,38 @@ describe "Ticket pages" do
 
   describe "index as non admin" do
     before do
-      visit signin_path
+      #sign in as author user (this user)
       @user = FactoryGirl.create(:user)
+      visit signin_path      
       fill_in "Email", with: @user.email
       fill_in "Password", with: @user.password
       click_button "Sign in"
-
-      @ticket = FactoryGirl.create(:ticket)
-      @not_my_ticket = FactoryGirl.create(:ticket)
-      @ticket.user_id = @user.id
-      @user.tickets << @ticket      
-      #sign in as non admin      
+      #create tickets
+      @game = FactoryGirl.create(:game)
+      @ticket = FactoryGirl.create(:ticket, user: @user, game: @game)
+      @other_user = FactoryGirl.create(:user)
+      @other_game = FactoryGirl.create(:game)
+      @not_my_ticket = FactoryGirl.create(:ticket, user: @other_user, game: @other_game)
       visit tickets_path
     end
+    it{ should have_content("#{@ticket.name}") }
+    it{ should have_content("#{@not_my_ticket.name}") }
     it{ should have_selector("a#edit_ticket_#{@ticket.id}") }
     it{ should_not have_selector("a#edit_ticket_#{@not_my_ticket.id}") }
     it{ should have_selector("a#delete_ticket_#{@ticket.id}") }
     it{ should_not have_selector("a#delete_ticket_#{@not_my_ticket.id}") }
+
+    describe "then visit user page" do
+      before{ visit user_path(@user) }
+      it{ should have_selector("a#edit_ticket_#{@ticket.id}") }
+      it{ should have_selector("a#delete_ticket_#{@ticket.id}") }
+      it{ should_not have_selector("a#edit_ticket_#{@not_my_ticket.id}") }
+      it{ should_not have_selector("a#delete_ticket_#{@not_my_ticket.id}") }
+    end
   end
+
+  
+
 
 
 end

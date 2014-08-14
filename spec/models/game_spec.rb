@@ -2,8 +2,7 @@ require 'spec_helper'
 
 describe Game do
 
-  before{ @game = Game.new(name: "Example Game",
-    body: "Example Body", user_id:"1")}
+  before{ @game = FactoryGirl.create(:game)}
 
   subject{ @game }
 
@@ -34,17 +33,11 @@ describe Game do
   end
   #uniqueness of fields
   describe "when name is already taken" do
-
-    before do
-
+    it "should not be valid" do
       game_with_same_name = @game.dup
-      game_with_same_name.name = @game.name.upcase
-      game_with_same_name.save
-
+      game_with_same_name.name = @game.name.upcase      
+      game_with_same_name.should_not be_valid
     end
-
-    it{ should_not be_valid }
-
   end
 
   describe "when body is too long" do

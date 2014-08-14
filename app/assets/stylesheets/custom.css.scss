@@ -1,3 +1,4 @@
+@import "bootstrap-sprockets";
 @import "bootstrap";
 
 /* universal */
@@ -65,6 +66,7 @@ p {
   padding-top: 9px;
   font-weight: bold;
   line-height: 1;
+  margin-top: 8px;
 }
 
 #logo:hover {
@@ -135,7 +137,8 @@ input {
 }
 
 #error_explanation {
-  color: #CCFFFF;
+  margin-top: 12px;
+  color: #B20000;
   text-align: center;
   ul {
     list-style: none;

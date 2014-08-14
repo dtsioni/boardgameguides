@@ -28,6 +28,8 @@
         %td
           Status
         %td
+          Game
+        %td
         %td
     %tbody    
       -@user.tickets.each do |ticket|
@@ -46,6 +48,8 @@
           %td
             -if !ticket.fulfilled
               = ticket.status
+          %td
+            = link_to "#{ticket.game.name}", ticket.game
           -if can? :edit, ticket
             %td
               = link_to "Edit", edit_ticket_path(ticket), id: "edit_ticket_#{ticket.id}"

@@ -75,8 +75,8 @@ describe "User pages" do
             click_link('Sign out')
           end
 
-          it{should have_selector('a#sign_up_home')}
-          it{should have_selector('a#sign_in_home')}          
+          it{should have_content("Sign up")}
+          it{should have_content("Sign in")}          
         end
 
       end      
@@ -197,7 +197,17 @@ describe "User pages" do
     end
 
     it { should have_selector("li#add_game") }
-
+    it { should have_selector("li#show_games") }
+    it { should have_selector("li#show_tickets")}
+    #icons
+    it { should have_selector("span.glyphicon.glyphicon-home") }
+    it { should have_selector("span.glyphicon.glyphicon-user") }
+    it { should have_selector("span.glyphicon.glyphicon-pencil") }
+    it { should have_selector("span.glyphicon.glyphicon-folder-open")}
+    it { should have_selector("span.glyphicon.glyphicon-cog") }
+    it { should have_selector("span.glyphicon.glyphicon-tower") }
+    it { should have_selector("span.glyphicon.glyphicon-tag") }
+    it { should have_selector("span.glyphicon.glyphicon-log-out") }
     describe "as admin" do
 
       before do
@@ -214,6 +224,8 @@ describe "User pages" do
         visit root_path
 
       end
+
+      it{ should have_selector("span.glyphicon.glyphicon-wrench")}
 
       describe "user page" do
 
@@ -241,8 +253,7 @@ describe "User pages" do
 
         before do
           @game = FactoryGirl.create(:game)
-          @ticket = FactoryGirl.create(:ticket)
-          @game.tickets << @ticket
+          @ticket = FactoryGirl.create(:ticket, game: @game, user: @user)
           visit game_path(@game)
         end
         it{ should have_selector("a#add_request") }
@@ -252,6 +263,25 @@ describe "User pages" do
 
     end
 
+  end
+
+  describe "when user is not signed in" do
+    describe "at home page" do
+      before{ visit root_path }
+      it{ should have_content("Welcome") }
+      #show dropdown menu
+      it{ should have_selector("span.glyphicon.glyphicon-folder-open") }
+      it{ should have_selector("span.glyphicon.glyphicon-tower") }
+      it{ should have_selector("span.glyphicon.glyphicon-tag") }
+      #home
+      it{ should have_selector("span.glyphicon.glyphicon-home") }
+      #help
+      it{ should have_selector("span.glyphicon.glyphicon-question-sign") }
+      #sign in
+      it{ should have_selector("span.glyphicon.glyphicon-log-in") }
+      #sign up
+      it{ should have_selector("span.glyphicon.glyphicon-unchecked") }
+    end
   end
 
   

@@ -13,6 +13,10 @@
       %td
         Description
       %td
+        User
+      %td
+        Game
+      %td
         Fulfilled?
       %td
         Status
@@ -37,6 +41,10 @@
         = link_to "#{ticket.name}", ticket
       %td
         = ticket.body
+      %td
+        = link_to "#{ticket.user.name}", ticket.user
+      %td
+        = link_to "#{ticket.game.name}", ticket.game
       %td
         = ticket.fulfilled.to_s.humanize      
       %td

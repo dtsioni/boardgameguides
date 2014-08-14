@@ -5,45 +5,97 @@
 %header.navbar.navbar-fixed-top.navbar-default
   %div.nav
     %div.container
-      = link_to "Boardgame guides", root_path, id: "logo"
+      = link_to root_path, id: "logo" do
+        = content_tag(:span, "", :class => "")
+        REALLY LONG LOGO NAME
       -if !signed_in?
         -#not signed in
         %nav
           %ul.nav.navbar-nav.navbar-right
             %li
-              = link_to "Home", root_path
+              = link_to root_path do                
+                = content_tag(:span, "", :class => "glyphicon glyphicon-home")
+                Home
+            %li.dropdown
+              %a.dropdown-toggle{href: "#", "data-toggle" => "dropdown"}
+                = content_tag(:span, "", :class => "glyphicon glyphicon-folder-open")
+                Show
+                %b.caret
+              %ul.dropdown-menu
+                %li#show_games
+                  = link_to games_path do
+                    = content_tag(:span, "", :class => "glyphicon glyphicon-tower")
+                    Games
+                %li#show_tickets
+                  = link_to tickets_path do
+                    = content_tag(:span, "", :class => "glyphicon glyphicon-tag")
+                    Tickets
             %li
-              = link_to "Help", "#"
+              = link_to "#" do
+                = content_tag(:span, "", :class => "glyphicon glyphicon-question-sign")
+                Help
             %li
-              = link_to "Sign in", signin_path
+              = link_to signin_path do
+                = content_tag(:span, "", :class => "glyphicon glyphicon-unchecked")
+                Sign up
+            %li
+              = link_to signin_path do
+                = content_tag(:span, "", :class => "glyphicon glyphicon-log-in")
+                Sign in
       -else
         -#signed in
         %nav
-          %ul.nav.navbar-nav.navbar-right                          
+          %ul.nav.navbar-nav.navbar-right               
             %li 
-              = link_to "Home", root_path
+              = link_to root_path do                
+                = content_tag(:span, "", :class => "glyphicon glyphicon-home")
+                Home
             %li
-              = link_to "#{current_user.name}", current_user
+              = link_to current_user do
+                = content_tag(:span, "", :class => "glyphicon glyphicon-user")
+                = current_user.name
             -if can? :index, User
               %li#admin_panel
-                =link_to "Admin Control Panel", users_path
+                =link_to control_path do
+                  = content_tag(:span, "", :class => "glyphicon glyphicon-wrench")
+                  Control Panel
             %li.dropdown
               %a.dropdown-toggle{href: "#", "data-toggle" => "dropdown"}
+                = content_tag(:span, "", :class => "glyphicon glyphicon-pencil")
                 Create
                 %b.caret
               %ul.dropdown-menu      
                 %li#add_game
-                  = link_to "Game", new_game_path
+                  = link_to new_game_path do
+                    = content_tag(:span, "", :class => "glyphicon glyphicon-tower")
+                    Game
+            %li.dropdown
+              %a.dropdown-toggle{href: "#", "data-toggle" => "dropdown"}
+                = content_tag(:span, "", :class => "glyphicon glyphicon-folder-open")
+                Show
+                %b.caret
+              %ul.dropdown-menu
+                %li#show_games
+                  = link_to games_path do
+                    = content_tag(:span, "", :class => "glyphicon glyphicon-tower")
+                    Games
+                %li#show_tickets
+                  = link_to tickets_path do
+                    = content_tag(:span, "", :class => "glyphicon glyphicon-tag")
+                    Tickets
             %li#fat-menu.dropdown
               %a.dropdown-toggle{href: "#", "data-toggle" => "dropdown"}
+                = content_tag(:span, "", :class => "glyphicon glyphicon-cog")
                 Account
                 %b{class: "caret"}
               %ul.dropdown-menu      
                 %li
                   = link_to "Settings", '#'
                 %li
-                  = link_to "My Requests", '#'                
+                  = link_to "My Tickets", '#'                
                 %li.divider
                 %li
-                  = link_to "Sign out", signout_path, method: "delete"
+                  = link_to signout_path, method: "delete" do
+                    = content_tag(:span, "", :class => "glyphicon glyphicon-log-out")
+                    Sign out
                 

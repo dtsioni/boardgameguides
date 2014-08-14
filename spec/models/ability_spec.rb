@@ -176,4 +176,5 @@ describe "User role" do
       it{ should_not be_able_to(:destroy, @different_user_ticket) }
     end
   end
+
 end
