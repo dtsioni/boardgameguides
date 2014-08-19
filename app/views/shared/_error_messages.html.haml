@@ -25,3 +25,12 @@
     -@ticket.errors.full_messages.each do |msg|
       %li        
         =msg
+- if @guide && @guide.errors.any?
+  #error_explanation
+    %div
+      The form contains
+      =pluralize(@guide.errors.count, "error")
+    %ul{class:""}
+    -@guide.errors.full_messages.each do |msg|
+      %li        
+        =msg

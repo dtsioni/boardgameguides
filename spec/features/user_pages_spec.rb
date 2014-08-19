@@ -208,61 +208,81 @@ describe "User pages" do
     it { should have_selector("span.glyphicon.glyphicon-tower") }
     it { should have_selector("span.glyphicon.glyphicon-tag") }
     it { should have_selector("span.glyphicon.glyphicon-log-out") }
+
+    describe "show page" do
+      before{ visit user_path(@user) }
+      it{ should have_content("Tickets") }
+      it{ should have_content("Guides") }
+    end
+
     describe "as admin" do
-
       before do
-
         visit signin_path
-
         @admin = FactoryGirl.create(:admin)
-
         fill_in "Email", with: @admin.email
         fill_in "Password", with: @admin.password
-
         click_button "Sign in"
-
         visit root_path
-
       end
-
       it{ should have_selector("span.glyphicon.glyphicon-wrench")}
-
       describe "user page" do
-
         before do
-
           @user2 = FactoryGirl.create(:user)
-
           visit( user_path(@user2) )
-
         end
-
-        it {should have_content(@user2.role.humanize)}
-        
+        it { should have_content(@user2.role.humanize) }
       end
-
       describe "see control panel" do
-
-        before{visit root_path}
-
+        before{visit control_path}
         it{should have_selector("li#admin_panel")}
-
+        it{ should have_content("Users") }
+        it{ should have_content("Guides") }
+        it{ should have_content("Tickets") }
+        it{ should have_content("Games") }
       end
-
       describe "show game page" do
-
         before do
           @game = FactoryGirl.create(:game)
           @ticket = FactoryGirl.create(:ticket, game: @game, user: @user)
           visit game_path(@game)
         end
-        it{ should have_selector("a#add_request") }
+        it{ should have_selector("a#add_ticket") }
         it{ should have_content("#{@ticket.name}") }
-
       end
-
     end
 
+    describe "as moderator" do
+      before do
+        visit signin_path
+        @user = FactoryGirl.create(:user)
+        fill_in "Email", with: @user.email
+        fill_in "Password", with: @user.password
+        click_button "Sign in"
+
+        
+      end
+      describe "at guides index page" do
+        before do
+          @guide = FactoryGirl.create(:guide)
+          @game = FactoryGirl.create(:game)
+          @different_user_guide = FactoryGirl.create(:guide)
+          @different_user = FactoryGirl.create(:user)
+          @different_user_game = FactoryGirl.create(:game)
+
+          @different_user.guides << @different_user_guide
+          @different_user_game.guides << @different_user_guide
+
+          @user.guides << @guide          
+          @game.guides << @guide
+
+          visit guides_path
+        end
+        it{ should have_selector("a#edit_guide_#{@guide.id}") }
+        it{ should have_selector("a#delete_guide_#{@guide.id}") }
+        it{ should_not have_selector("a#edit_guide_#{@different_user_guide.id}") }
+        it{ should_not have_selector("a#delete_guide_#{@different_user_guide.id}") }     
+      end
+    end
   end
 
   describe "when user is not signed in" do
@@ -281,9 +301,38 @@ describe "User pages" do
       it{ should have_selector("span.glyphicon.glyphicon-log-in") }
       #sign up
       it{ should have_selector("span.glyphicon.glyphicon-unchecked") }
+      it{ should have_selector("a#sign_up") }
     end
+    describe "at user show page" do
+      before do
+        @user = FactoryGirl.create(:user)
+        visit user_path(@user)
+      end
+      it{ should_not have_content("#{@user.role}") }
+      it{ should have_content("#{@user.name}")}
+    end
+    describe "at game show page" do
+      before do
+        @game = FactoryGirl.create(:game)
+        visit game_path(@game)
+      end
+      it{ should_not have_selector("a#add_request") }
+      it{ should have_content("#{@game.name}") }
+    end
+    describe "at guides index page" do
+      before do
+        @guide = FactoryGirl.create(:guide)
+        @user = FactoryGirl.create(:user)
+        @game = FactoryGirl.create(:game)
+
+        @user.guides << @guide
+        @game.guides << @guide
+
+        visit guides_path
+      end
+      it{ should have_content("#{@guide.name}") }
+      it{ should_not have_selector("a#edit_guide_#{@guide.id}") }
+      it{ should_not have_selector("a#delete_guide_#{@guide.id}") }
+    end    
   end
-
-  
-
 end

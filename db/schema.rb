@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140806152450) do
+ActiveRecord::Schema.define(version: 20140814194607) do
 
   create_table "documents", force: true do |t|
     t.datetime "created_at"
@@ -35,11 +35,11 @@ ActiveRecord::Schema.define(version: 20140806152450) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.string   "body"
     t.string   "format"
     t.string   "link"
     t.integer  "game_id"
     t.integer  "user_id"
+    t.text     "body"
   end
 
   create_table "tickets", force: true do |t|

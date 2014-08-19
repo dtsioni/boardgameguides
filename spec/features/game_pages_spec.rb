@@ -18,6 +18,20 @@ describe "Game pages" do
 
   end
 
+  describe "show" do
+
+    before do
+      @game = FactoryGirl.create(:game)
+      visit game_path(@game)
+    end
+
+    it{ should have_content("#{@game.name}") }
+    it{ should have_selector("a#add_ticket") }
+    it{ should have_selector("a#add_guide") }
+    it{ should have_content("Guides") }
+    it{ should have_content("Tickets") }
+  end
+
   describe "new" do
 
     describe "with valid information" do

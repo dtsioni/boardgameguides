@@ -9,4 +9,23 @@ module ApplicationHelper
       "#{base_title} | #{page_title}"
     end
   end
+
+  #markdown
+  def markdown(text)
+    def markdown(blogtext)
+      renderOptions = {hard_wrap: true, filter_html: true}
+      markdownOptions = {autolink: true, no_intra_emphasis: true, strikethrough: true }
+      markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(renderOptions), markdownOptions)
+      markdown.render(blogtext).html_safe
+   end
+  end
+
+  def syntax_highlighter(html)
+    doc = Nokogiri::HTML(html)
+    doc.search("//pre[@lang]").each do |pre|
+      pre.replace Albino.colorize(pre.text.rstrip, pre[:lang])
+    end
+    doc.to_s
+  end
+
 end

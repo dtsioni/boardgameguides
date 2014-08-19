@@ -29,6 +29,12 @@ class Ability
       can :update, Ticket
       can :destroy, Ticket
 
+      can :new, Guide
+      can :create, Guide
+      can :edit, Guide
+      can :update, Guide
+      can :destroy, Guide
+
 
 
     when "moderator"
@@ -51,6 +57,11 @@ class Ability
       can :update, Ticket
       can :destroy, Ticket
 
+      can :new, Guide
+      can :create, Guide
+      can :edit, Guide
+      can :update, Guide
+      can :destroy, Guide
 
     when "author"      
       #can update self   
@@ -79,10 +90,19 @@ class Ability
         this_ticket.user_id == user.id
       end
 
-    when "guest"
-
+      can :new, Guide
+      can :create, Guide
+      can :edit, Guide do |this_guide|
+        this_guide.user_id == user.id
+      end
+      can :update, Guide do |this_guide|
+        this_guide.user_id == user.id
+      end
+      can :destroy, Guide do |this_guide|
+        this_guide.user_id == user.id
+      end
     else
-
+      user.role = "guest"
     end
 
   end

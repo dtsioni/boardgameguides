@@ -1,0 +1,16 @@
+-provide(:title, @guide.name)
+%h1
+  = @guide.name
+%h3.center
+  Guide for 
+  = link_to "#{@guide.game.name}", @guide.game
+.text-center
+  .row
+    %h4
+      Format: 
+      = @guide.format
+    %h4
+      Link:
+      = @guide.link
+  .row.top15
+= markdown(@guide.body)

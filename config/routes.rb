@@ -3,9 +3,10 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :games, only: [:new, :create, :show, :index, :edit, :destroy, :update] do
     resources :tickets, only: [:new, :create]
+    resources :guides, only: [:new, :create]
   end
   resources :tickets, only: [:index, :edit, :update, :show, :destroy]
-
+  resources :guides, only: [:show, :edit, :update, :index, :destroy]
   resources :users
 
   match '/signup',  to: 'users#new',            via: 'get'

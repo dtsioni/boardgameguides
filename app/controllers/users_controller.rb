@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only:[:show, :destroy, :update, :edit]
   authorize_resource
   skip_authorize_resource only:[:show, :create, :new]
+  
   def show
   end
 
@@ -53,7 +54,8 @@ class UsersController < ApplicationController
     name = @user.name
     @user.destroy
     respond_to do |format|
-      format.html{redirect_to users_path, notice: "#{name} was successfully destroyed."}
+      format.html{redirect_to users_path }
+      flash[:success] = "#{name} was successfully destroyed."
     end
   end
   

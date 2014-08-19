@@ -1,0 +1,17 @@
+=form_for([@game, @guide], :html => {:class => "form-inline"}) do |f|
+  .form-group.center-block.center  
+    .input-group
+      =f.label :name
+      =f.text_field :name, class:"form-control", placeholder:"Name"
+    .input-group
+      =f.label :format
+      =f.text_field :format, class:"form-control", placeholder:"Format"
+    .input-group
+      =f.label :link
+      =f.text_field :link, class:"form-control", placeholder:"Link"
+  .row.form-group.top5
+    .row
+      =f.label :body
+    =f.text_area :body, cols: 100, rows: 10, class:"form-control", placeholder:"Body"
+  .row.col-md-4.col-md-offset-4.top5
+    =f.submit "Submit", class: "btn btn-primary", type:"submit"

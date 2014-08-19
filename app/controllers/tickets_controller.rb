@@ -1,9 +1,8 @@
 class TicketsController < ApplicationController
-  #TICKET IS REQUEST
-  #REQUEST IS TICKET
   before_action :set_game, only: [:set_ticket, :new, :create]
   before_action :set_ticket, only: []
   authorize_resource
+  skip_authorize_resource only: [:index, :show]
 
   def show
     @ticket = Ticket.find(params[:id])
@@ -63,7 +62,8 @@ class TicketsController < ApplicationController
     game = @ticket.game
     @ticket.destroy
     respond_to do |format|
-      format.html{ redirect_to game, notice: "#{name} was successfully destroyed."}
+      format.html{ redirect_to game }
+      flash[:success] = "#{name} was successfully destroyed."
     end
   end
 

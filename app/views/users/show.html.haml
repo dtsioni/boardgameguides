@@ -1,14 +1,55 @@
 -provide(:title, @user.name)
 %h1
   =@user.name
--if admin? current_user
+-if can? :supervise, User
   .center
     =@user.role.humanize
-
-%h1.align-center.col-md-4.col-md-offset-4
+%h1.text-center
+  Guides
+-if @user.guides.count == 0
+  %h3.text-center
+    This user has no guides!
+-else
+  %table.table.table-striped.table-bordered.table-hover.table-condensed
+    %thead
+      %tr
+        %td
+          -if can? :supervise, Ticket
+            ID
+        %td
+          Score
+        %td
+          Name
+        %td
+          Format
+        %td
+          Game
+        %td
+        %td
+    %tbody
+      -@user.guides.each do |guide|
+        %tr
+          %td
+            -if can? :supervise, guide
+              = guide.id
+          %td
+            Score
+          %td
+            = link_to "#{guide.name}", guide
+          %td
+            = guide.format
+          %td
+            = guide.game.name
+          %td
+            -if can? :edit, guide
+              = link_to "Edit", edit_guide_path(guide), id: "edit_guide_#{guide.id}"
+          %td
+            -if can? :destroy, guide
+              = link_to "Delete", guide, method: :delete, data:{confirm:"Are you sure?"}, id: "delete_guide_#{guide.id}"
+%h1.text-center
   Tickets
--if @user.tickets.count == 0
-  %h3.align-center.col-md-4.col-md-offset-4
+-if @user.tickets.count == 0  
+  %h3.text-center
     This user has no tickets!
 -else
   %table.table.table-striped.table-bordered.table-hover.table-condensed

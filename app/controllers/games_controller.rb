@@ -2,7 +2,7 @@ class GamesController < ApplicationController
 
   before_action :set_game, only:[:show, :destroy, :edit, :update]
   authorize_resource
-  skip_authorize_resource only:[:show]
+  skip_authorize_resource only:[:show, :index]
   def show
   end
 
@@ -35,9 +35,19 @@ class GamesController < ApplicationController
 
   def destroy
     name = @game.name
+
+    @game.tickets.each do |ticket|
+      ticket.destroy
+    end
+
+    @game.guides.each do |guide|
+      guide.destroy
+    end
+    
     @game.destroy
     respond_to do |format|
-      format.html{ redirect_to control_path, notice: "#{name} was successfully destroyed."}
+      format.html{ redirect_to control_path }
+      flash[:success] = "#{name} was successfully destroyed."
     end
   end
 

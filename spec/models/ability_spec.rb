@@ -8,11 +8,18 @@ describe "User role" do
   #create users and objects to manipulate
   before do
     ability = Ability.new(user)
+
     @example_user = User.new(name: "Example")
     @example_game = FactoryGirl.create(:game)
+    @example_guide = FactoryGirl.create(:guide)
     @example_ticket = FactoryGirl.create(:ticket)
+
     @different_user_ticket = FactoryGirl.create(:ticket)
+    @different_user_guide = FactoryGirl.create(:guide)
+
     user.tickets << @example_ticket
+    user.guides << @example_guide
+    @example_game.guides << @example_guide
   end
   #everyone
 
@@ -70,6 +77,18 @@ describe "User role" do
     describe "is destroying tickets" do
       it{ should be_able_to(:destroy, Ticket) }
     end
+    #guides
+    describe "is creating guide" do
+      it{ should be_able_to(:new, Guide) }
+      it{ should be_able_to(:create, Guide) }
+    end
+    describe "is editing guide" do
+      it{ should be_able_to(:edit, Guide) }
+      it{ should be_able_to(:update, Guide) }
+    end
+    describe "is destroying guide" do
+      it{ should be_able_to(:destroy, Guide) }
+    end
   end
   #moderator
   describe "when moderator" do
@@ -124,6 +143,18 @@ describe "User role" do
     describe "is destroying tickets" do
       it{ should be_able_to(:destroy, Ticket) }
     end
+    #guides
+    describe "is creating guide" do
+      it{ should be_able_to(:new, Guide) }
+      it{ should be_able_to(:create, Guide) }
+    end
+    describe "is editing guide" do
+      it{ should be_able_to(:edit, Guide) }
+      it{ should be_able_to(:update, Guide) }
+    end
+    describe "is destroying guide" do
+      it{ should be_able_to(:destroy, Guide) }
+    end
   end
   #author
   describe "when author" do
@@ -175,6 +206,22 @@ describe "User role" do
       it{ should be_able_to(:destroy, @example_ticket) }
       it{ should_not be_able_to(:destroy, @different_user_ticket) }
     end
+    #guides
+    describe "is creating guide" do
+      it{ should be_able_to(:new, Guide) }
+      it{ should be_able_to(:create, Guide) }
+    end
+    describe "is editing guide" do
+      it{ should be_able_to(:edit, @example_guide) }
+      it{ should be_able_to(:update, @example_guide) }
+      it{ should_not be_able_to(:edit, @different_user_guide) }
+      it{ should_not be_able_to(:update, @different_user_guide) }
+    end
+    describe "is destroying guide" do
+      it{ should be_able_to(:destroy, @example_guide) }
+      it{ should_not be_able_to(:destroy, @different_user_guide) }
+    end
+
   end
 
 end

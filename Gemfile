@@ -54,4 +54,7 @@ gem 'cancan'
 gem 'bcrypt'
 gem 'bootstrap-sass'
 gem 'sass'
+gem 'redcarpet'
+# Heroku
+gem 'rails_12factor', group: :production
 
