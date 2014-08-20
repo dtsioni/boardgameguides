@@ -61,4 +61,3 @@ gem 'redcarpet'
 # Heroku
 gem 'rails_12factor', group: :production
 gem 'pg'
-

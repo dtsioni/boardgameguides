@@ -11,14 +11,14 @@
 
 @font-face{
   font-family:'Glyphicons Halflings';
-  src:url('./glyphicons-halflings-regular.eot');
-  src:url('./glyphicons-halflings-regular.eot?#iefix') 
+  src:url('fonts/glyphicons-halflings-regular.eot');
+  src:url('fonts/glyphicons-halflings-regular.eot?#iefix') 
     format('embedded-opentype'),
-  url('./glyphicons-halflings-regular.woff') 
+  url('fonts/glyphicons-halflings-regular.woff') 
     format('woff'),
-  url('./glyphicons-halflings-regular.ttf') 
+  url('fonts/glyphicons-halflings-regular.ttf') 
     format('truetype'),
-  url('./glyphicons-halflings-regular.svg#glyphicons_halflingsregular') 
+  url('fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') 
     format('svg')
 }
 .glyphicon{
