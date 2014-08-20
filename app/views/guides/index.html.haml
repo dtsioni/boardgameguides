@@ -6,8 +6,8 @@
   -var = Guide.all
   -#Put SORT BY SCORE here
 -else
-  -var = @game.guides && @game
--if var == []
+  -var = @game.guides
+-if var == [] && @game
   %h5.text-center
     = link_to "Create the first guide!", new_game_guide_path(@game.id)
 -else
