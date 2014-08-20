@@ -1,51 +1,56 @@
-%h1.align-center.col-md-4.col-md-offset-4
+%h1.text-center
   Guides
-%table.table.table-striped.table-bordered.table-hover.table-condensed
-  %thead
-    %tr
-      %td
-        -if can? :supervise, Guide
-          ID
-      %td
-        Score
-      %td
-        Name
-      %td
-        Format
-      %td
-        Game
-      %td
-        User
-      %td
-      %td
-  %tbody
-  -#if a game exists, use only guides from that game
-  -#otherwise, show all guides
-  -if !@game
-    -var = Guide.all
-    -#Put SORT BY SCORE here
-  -else
-    -var = @game.guides
-  -var.each do |guide|
-    %tr
-      %td
-        -if can? :supervise, guide
-          = guide.id
-      %td
-        Score
-      %td
-        = link_to "#{guide.name}", guide
-      %td
-        = guide.format
-      %td
-        = link_to "#{guide.game.name}", guide.game
-      %td
-        = link_to "#{guide.user.name}",
-          guide.user
-      -if can? :edit, guide
+-#if a game exists, use only guides from that game
+-#otherwise, show all guides
+-unless @game
+  -var = Guide.all
+  -#Put SORT BY SCORE here
+-else
+  -var = @game.guides
+-if var == []
+  %h5.text-center
+    = link_to "Create the first guide!", new_game_guide_path(@game)
+-else
+  %table.table.table-striped.table-bordered.table-hover.table-condensed
+    %thead
+      %tr
         %td
-          = link_to "Edit", edit_guide_path(guide), id: "edit_guide_#{guide.id}"
-      -if can? :destroy, guide
+          -if can? :supervise, Guide
+            ID
         %td
-          = link_to "Delete", guide, method: :delete, data:{confirm: "Are you sure?"}, id: "delete_guide_#{guide.id}"
+          Score
+        %td
+          Name
+        %td
+          Format
+        %td
+          Game
+        %td
+          User
+        %td
+        %td
+    %tbody
+    
+    -var.each do |guide|
+      %tr
+        %td
+          -if can? :supervise, guide
+            = guide.id
+        %td
+          Score
+        %td
+          = link_to "#{guide.name}", guide
+        %td
+          = guide.format
+        %td
+          = link_to "#{guide.game.name}", guide.game
+        %td
+          = link_to "#{guide.user.name}",
+            guide.user
+        -if can? :edit, guide
+          %td
+            = link_to "Edit", edit_guide_path(guide), id: "edit_guide_#{guide.id}"
+        -if can? :destroy, guide
+          %td
+            = link_to "Delete", guide, method: :delete, data:{confirm: "Are you sure?"}, id: "delete_guide_#{guide.id}"
 

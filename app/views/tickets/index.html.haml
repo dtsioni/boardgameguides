@@ -1,59 +1,63 @@
-%h1.align-center.col-md-4.col-md-offset-4
+%h1.text-center
   Tickets
+-#if a game exists, use only tickets from that game
+-#otherwise, show all tickets
 -unless @game
   -var = Ticket.all
   -#Put SORT BY SCORE here
 -else
   -var = @game.tickets
-%table.table.table-striped.table-bordered.table-hover.table-condensed
-  %thead
-    %tr
-      %td
-        -if can? :supervise, Ticket
-          ID
-      %td
-        Score
-      %td
-        Name
-      %td
-        Description
-      %td
-        User
-      %td
-        Game
-      %td
-        Fulfilled?
-      %td
-        Status
-      %td
-      %td
-  %tbody
-  -#if a game exists, use only tickets from that game
-  -#otherwise, show all tickets
-  
-  -var.each do |ticket|
-    %tr
-      %td
-        -if can? :supervise, ticket
-          = ticket.id
-      %td
-        Score
-      %td
-        = link_to "#{ticket.name}", ticket
-      %td
-        = ticket.body
-      %td
-        = link_to "#{ticket.user.name}", ticket.user
-      %td
-        = link_to "#{ticket.game.name}", ticket.game
-      %td
-        = ticket.fulfilled.to_s.humanize      
-      %td
-        -if !ticket.fulfilled
-          = ticket.status
-      -if can? :edit, ticket
+-if var == []
+  %h5.text-center
+    = link_to "Create the first ticket!", new_game_ticket_path(@game)
+-else
+  %table.table.table-striped.table-bordered.table-hover.table-condensed
+    %thead
+      %tr
         %td
-          = link_to "Edit", edit_ticket_path(ticket), id: "edit_ticket_#{ticket.id}"
-      -if can? :destroy, ticket
+          -if can? :supervise, Ticket
+            ID
         %td
-          = link_to "Delete", ticket, method: :delete, data:{confirm:"Are you sure?"}, id: "delete_ticket_#{ticket.id}" 
+          Score
+        %td
+          Name
+        %td
+          Description
+        %td
+          User
+        %td
+          Game
+        %td
+          Fulfilled?
+        %td
+          Status
+        %td
+        %td
+    %tbody
+    
+    -var.each do |ticket|
+      %tr
+        %td
+          -if can? :supervise, ticket
+            = ticket.id
+        %td
+          Score
+        %td
+          = link_to "#{ticket.name}", ticket
+        %td
+          = ticket.body
+        %td
+          = link_to "#{ticket.user.name}", ticket.user
+        %td
+          = link_to "#{ticket.game.name}", ticket.game
+        %td
+          = ticket.fulfilled.to_s.humanize      
+        %td
+          -if !ticket.fulfilled
+            = ticket.status
+        -if can? :edit, ticket
+          %td
+            = link_to "Edit", edit_ticket_path(ticket), id: "edit_ticket_#{ticket.id}"
+        -if can? :destroy, ticket
+          %td
+            = link_to "Delete", ticket, method: :delete, data:{confirm:"Are you sure?"}, id: "delete_ticket_#{ticket.id}" 

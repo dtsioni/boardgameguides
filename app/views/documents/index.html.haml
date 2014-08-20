@@ -1,49 +1,54 @@
-%h1.align-center.col-md-4.col-md-offset-4
+%h1.text-center
   Documents
-%table.table.table-striped.table-bordered.table-hover.table-condensed
-  %thead
-    %tr
-      %td
-        -if can? :supervise, Document
-          ID
-      %td
-        Score
-      %td
-        Name
-      %td
-        Link
-      %td
-        Game
-      %td
-        User
-      %td
-      %td
-  %tbody
-  -#if a game exists, use only tickets from that game
-  -#otherwise, show all tickets
-  -if !@game
-    -var = Document.all
-    -#Put SORT BY SCORE here
-  -else
-    -var = @game.documents
-  -var.each do |document|
-    %tr
-      %td
-        -if can? :supervise, document
-          = document.id
-      %td
-        Score
-      %td
-        = link_to "#{document.name}", game_document_path(@game, document)
-      %td
-        = link_to document.format, url_with_protocol(document.link), :target => "_blank"
-      %td
-        = link_to "#{document.game.name}", document.game
-      %td
-        = link_to "#{document.user.name}", document.user
-      -if can? :edit, document
+-#if a game exists, use only tickets from that game
+-#otherwise, show all tickets
+-if !@game
+  -var = Document.all
+  -#Put SORT BY SCORE here
+-else
+  -var = @game.documents
+-if var == []
+  %h5.text-center
+    = link_to "Create the first document!", new_game_document_path(@game)
+-else
+  %table.table.table-striped.table-bordered.table-hover.table-condensed
+    %thead
+      %tr
         %td
-          = link_to "Edit", edit_document_path(document), id: "edit_document_#{document.id}"
-      -if can? :destroy, document
+          -if can? :supervise, Document
+            ID
         %td
-          = link_to "Delete", document, method: :delete, data:{confirm:"Are you sure?"}, id: "delete_document_#{document.id}" 
+          Score
+        %td
+          Name
+        %td
+          Link
+        %td
+          Game
+        %td
+          User
+        %td
+        %td
+    %tbody
+    
+    -var.each do |document|
+      %tr
+        %td
+          -if can? :supervise, document
+            = document.id
+        %td
+          Score
+        %td
+          = link_to "#{document.name}", game_document_path(@game, document)
+        %td
+          = link_to document.format, url_with_protocol(document.link), :target => "_blank"
+        %td
+          = link_to "#{document.game.name}", document.game
+        %td
+          = link_to "#{document.user.name}", document.user
+        -if can? :edit, document
+          %td
+            = link_to "Edit", edit_document_path(document), id: "edit_document_#{document.id}"
+        -if can? :destroy, document
+          %td
+            = link_to "Delete", document, method: :delete, data:{confirm:"Are you sure?"}, id: "delete_document_#{document.id}" 
