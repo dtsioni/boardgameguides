@@ -1,7 +1,7 @@
 %div{class:"center hero-unit"}
   .row
     %h1 Welcome to Boardgame Guides!
-  .row
+  .row.text-left
     -@games = Game.all
     -@games.to_a.sort_by!{ |m| m.name.downcase }
     -#mirrored actions from game controller
