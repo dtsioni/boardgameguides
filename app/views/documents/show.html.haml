@@ -1,0 +1,16 @@
+%h1.text-center
+  = @document.name
+  for
+  = link_to "#{@document.game.name}", @document.game
+%h5.text-center
+  -if can? :edit, @document
+    = link_to "Edit", edit_document_path(@document), id: "edit_ticket_#{@document.id}"
+    |
+  -if can? :destroy, @document
+    -unless can? :edit, @document
+      |
+    = link_to "Delete", @document, method: :delete, data:{confirm:"Are you sure?"}, id: "delete_ticket_#{@document.id}"
+%h3.text-center
+  = @document.format
+%h3.text-center
+  = link_to @document.link, url_with_protocol(@document.link), :target => "_blank"

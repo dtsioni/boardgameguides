@@ -1,13 +1,53 @@
 -provide(:title, @user.name)
 %h1
-  =@user.name
+  %strong
+    =@user.name
 -if can? :supervise, User
   .center
     =@user.role.humanize
-%h1.text-center
+%h3.text-center
+  Documents
+-if @user.documents.count == 0
+  %h5.text-center
+    This user has no documents!
+-else
+  %table.table.table-striped.table-bordered.table-hover.table-condensed
+    %thead
+      %tr
+        %td
+          -if can? :supervise, Document
+            ID
+        %td
+          Score
+        %td
+          Name
+        %td
+          Link
+        %td
+        %td
+    %tbody
+      -@user.documents.each do |document|
+        %tr
+          %td
+            -if can? :supervise, document
+              = document.id
+          %td
+            Score
+          %td
+            = document.name
+          %td
+            = link_to "#{document.format}", url_with_protocol(document.link), :target => "_blank"
+          %td
+            -if can? :edit, document
+              = link_to "Edit", edit_document_path(document), id: "edit_document_#{document.id}"
+          %td
+            -if can? :destroy, document
+              = link_to "Delete", document, method: :delete, data:{confirm:"Are you sure?"}, id: "delete_document_#{document.id}" 
+
+%h3.text-center
   Guides
 -if @user.guides.count == 0
-  %h3.text-center
+  %h5.text-center
     This user has no guides!
 -else
   %table.table.table-striped.table-bordered.table-hover.table-condensed
@@ -46,10 +86,10 @@
           %td
             -if can? :destroy, guide
               = link_to "Delete", guide, method: :delete, data:{confirm:"Are you sure?"}, id: "delete_guide_#{guide.id}"
-%h1.text-center
+%h3.text-center
   Tickets
 -if @user.tickets.count == 0  
-  %h3.text-center
+  %h5.text-center
     This user has no tickets!
 -else
   %table.table.table-striped.table-bordered.table-hover.table-condensed

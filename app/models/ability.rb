@@ -35,6 +35,12 @@ class Ability
       can :update, Guide
       can :destroy, Guide
 
+      can :new, Document
+      can :create, Document
+      can :edit, Document
+      can :update, Document
+      can :destroy, Document
+
 
 
     when "moderator"
@@ -62,6 +68,12 @@ class Ability
       can :edit, Guide
       can :update, Guide
       can :destroy, Guide
+
+      can :new, Document
+      can :create, Document
+      can :edit, Document
+      can :update, Document
+      can :destroy, Document
 
     when "author"      
       #can update self   
@@ -98,8 +110,17 @@ class Ability
       can :update, Guide do |this_guide|
         this_guide.user_id == user.id
       end
-      can :destroy, Guide do |this_guide|
-        this_guide.user_id == user.id
+
+      can :new, Document
+      can :create, Document
+      can :edit, Document do |this_doc|
+        this_doc.user_id == user.id
+      end
+      can :update, Document do |this_doc|
+        this_doc.user_id == user.id
+      end
+      can :destroy, Document do |this_doc|
+        this_doc.user_id == user.id
       end
     else
       user.role = "guest"

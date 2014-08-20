@@ -47,9 +47,10 @@ class GuidesController < ApplicationController
 
   def destroy
     name = @guide.name
+    game = @guide.game
     @guide.destroy
     respond_to do |format|
-      format.html{redirect_to control_path }
+      format.html{redirect_to game }
       flash[:success] = "#{name} was successfully destroyed."
     end
   end

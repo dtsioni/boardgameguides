@@ -1,5 +1,5 @@
 %h1
   New Guide for
-  = @game.name
+  = link_to @game.name, @game
 .col-md-10.col-md-offset-1{style:"text-align:center;"}
   = render 'form'

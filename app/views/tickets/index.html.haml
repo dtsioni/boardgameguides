@@ -1,5 +1,10 @@
 %h1.align-center.col-md-4.col-md-offset-4
   Tickets
+-unless @game
+  -var = Ticket.all
+  -#Put SORT BY SCORE here
+-else
+  -var = @game.tickets
 %table.table.table-striped.table-bordered.table-hover.table-condensed
   %thead
     %tr
@@ -25,11 +30,7 @@
   %tbody
   -#if a game exists, use only tickets from that game
   -#otherwise, show all tickets
-  -if !@game
-    -var = Ticket.all
-    -#Put SORT BY SCORE here
-  -else
-    -var = @game.tickets
+  
   -var.each do |ticket|
     %tr
       %td

@@ -1,0 +1,11 @@
+=form_for([@game, @document], :html => {:class => "form-group"}) do |f|
+  .form-group
+    =f.label :name
+    =f.text_field :name, class:"form-control", placeholder: "Name"
+  .form-group
+    =f.label :link
+    =f.text_field :link, class:"form-control", placeholder: "Link"
+  .form-group
+    =f.label :format
+    =f.text_field :format, class:"form-control", placeholder: "Format"
+  =f.submit "Submit", class: "btn btn-primary", type: "submit"

@@ -215,6 +215,28 @@ describe "User pages" do
       it{ should have_content("Guides") }
     end
 
+    describe "guide show page" do
+      before do
+        @guide = FactoryGirl.create(:guide)
+        @game = FactoryGirl.create(:game)
+        @game.guides << @guide
+      end
+      describe "when this user is the author" do
+        before do
+          @user.guides << @guide
+          visit guide_path(@guide)
+        end
+        it{ should have_selector("a#edit_guide_#{@guide.id}") }
+      end
+      describe "when this user is not the author" do
+        before do
+          @different_user = FactoryGirl.create(:user)
+          @different_user.guides << @guide
+          visit guide_path(@guide)
+        end
+        it{ should_not have_selector("a#edit_guide_#{@guide.id}") }
+      end
+    end 
     describe "as admin" do
       before do
         visit signin_path
@@ -333,6 +355,20 @@ describe "User pages" do
       it{ should have_content("#{@guide.name}") }
       it{ should_not have_selector("a#edit_guide_#{@guide.id}") }
       it{ should_not have_selector("a#delete_guide_#{@guide.id}") }
+    end
+
+    describe "at guides show page" do
+      before do
+        @guide = FactoryGirl.create(:guide)
+        @user = FactoryGirl.create(:user)
+        @game = FactoryGirl.create(:game)
+
+        @user.guides << @guide
+        @game.guides << @guide
+
+        visit guides_path(@guide)
+      end
+      it{ should_not have_selector("a#edit_guide_#{@guide.id}") }
     end    
   end
 end

@@ -34,3 +34,12 @@
     -@guide.errors.full_messages.each do |msg|
       %li        
         =msg
+- if @document && @document.errors.any?
+  #error_explanation
+    %div
+      The form contains
+      =pluralize(@document.errors.count, "error")
+    %ul{class:""}
+    -@document.errors.full_messages.each do |msg|
+      %li        
+        =msg

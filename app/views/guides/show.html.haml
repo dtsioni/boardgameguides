@@ -9,8 +9,13 @@
     %h4
       Format: 
       = @guide.format
-    %h4
-      Link:
-      = @guide.link
+    -unless @guide.link.blank?
+      %h4
+        Link:
+        = link_to "#{@guide.link}", "#{@guide.link}"
+    -if can? :edit, @guide
+      = link_to "Edit Guide", edit_guide_path(@guide), id: "edit_guide_#{@guide.id}"
   .row.top15
-= markdown(@guide.body)
+
+-unless @guide.body.blank?
+  = markdown(@guide.body)
