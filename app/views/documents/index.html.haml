@@ -9,7 +9,7 @@
   -var = @game.documents
 -if var == [] && @game
   %h5.text-center
-    = link_to "Create the first document!", new_game_document_path(@game)
+    = link_to "Create the first document!", new_game_document_path(@game.id)
 -else
   %table.table.table-striped.table-bordered.table-hover.table-condensed
     %thead

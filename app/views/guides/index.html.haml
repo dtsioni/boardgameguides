@@ -9,7 +9,7 @@
   -var = @game.guides && @game
 -if var == []
   %h5.text-center
-    = link_to "Create the first guide!", new_game_guide_path(@game)
+    = link_to "Create the first guide!", new_game_guide_path(@game.id)
 -else
   %table.table.table-striped.table-bordered.table-hover.table-condensed
     %thead
