@@ -7,7 +7,7 @@
   -#Put SORT BY SCORE here
 -else
   -var = @game.documents
--if var == []
+-if var == [] && @game
   %h5.text-center
     = link_to "Create the first document!", new_game_document_path(@game)
 -else

@@ -7,9 +7,9 @@
   -#Put SORT BY SCORE here
 -else
   -var = @game.tickets
--if var == []
+-if var == [] && @game
   %h5.text-center
-    = link_to "Create the first ticket!", new_game_ticket_path(@game)
+    = link_to "Create the first ticket!", new_game_ticket_path(@game.id)
 -else
   %table.table.table-striped.table-bordered.table-hover.table-condensed
     %thead
