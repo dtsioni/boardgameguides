@@ -21,8 +21,9 @@ module Boardgameguides
     # config.i18n.default_locale = :de
 
     #bootstrap compatibility
+    config.assets.paths << "#{Rails}/vendor/assets/fonts"
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
-    
+    #
     config.generators do |g|
       g.test_framework :rspec,
         fixtures: true,
