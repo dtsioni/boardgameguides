@@ -41,6 +41,8 @@ class Ability
       can :update, Document
       can :destroy, Document
 
+      can :vote, :all
+
 
 
     when "moderator"
@@ -74,6 +76,8 @@ class Ability
       can :edit, Document
       can :update, Document
       can :destroy, Document
+
+      can :vote, :all
 
     when "author"      
       #can update self   
@@ -122,6 +126,8 @@ class Ability
       can :destroy, Document do |this_doc|
         this_doc.user_id == user.id
       end
+
+      can :vote, :all
     else
       user.role = "guest"
     end

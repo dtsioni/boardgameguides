@@ -4,9 +4,11 @@
 -#otherwise, show all tickets
 -unless @game
   -var = Ticket.all
-  -#Put SORT BY SCORE here
+  -@tickets = Ticket.all.sort_by{ |a| -a.score }
 -else
   -var = @game.tickets
+  -@tickets = @game.tickets
+  -@tickets = @tickets.sort_by{ |a| -a.score }
 -if var == [] && @game
   %h5.text-center
     = link_to "Create the first ticket!", new_game_ticket_path(@game.id)
@@ -17,6 +19,8 @@
         %td
           -if can? :supervise, Ticket
             ID
+        -if can? :vote, Ticket
+          %td
         %td
           Score
         %td
@@ -33,31 +37,52 @@
           Status
         %td
         %td
-    %tbody
-    
     -var.each do |ticket|
-      %tr
-        %td
-          -if can? :supervise, ticket
-            = ticket.id
-        %td
-          Score
-        %td
-          = link_to "#{ticket.name}", ticket
-        %td
-          = ticket.body
-        %td
-          = link_to "#{ticket.user.name}", ticket.user
-        %td
-          = link_to "#{ticket.game.name}", ticket.game
-        %td
-          = ticket.fulfilled.to_s.humanize      
-        %td
-          -if !ticket.fulfilled
-            = ticket.status
-        -if can? :edit, ticket
+      -#see if user already voted on this ticket
+      -if current_user && ticket.voted_up?(current_user)
+        -up_suffix = "_clicked"
+      -elsif current_user && ticket.voted_down?(current_user)
+        -down_suffix = "_clicked"
+      -else
+        -up_suffix = ""
+        -down_suffix = ""
+      %tbody
+        %tr
           %td
-            = link_to "Edit", edit_ticket_path(ticket), id: "edit_ticket_#{ticket.id}"
-        -if can? :destroy, ticket
+            -if can? :supervise, ticket
+              = ticket.id
+          -if can? :vote, ticket
+            %td
+              -#voting stuff goes in this td
+              =form_for @vote, html:{class:"ticket_vote"}, remote: true do |f| 
+                =f.hidden_field :ticket_id, :value => ticket.id
+                =f.hidden_field :user_id, :value => current_user.id 
+                =f.hidden_field :vote_type, :value => "up"
+                =f.submit "^", html:{class:"up_submit", class:"upvote#{up_suffix}"}
+              =form_for @vote, html:{class:"ticket_vote"}, remote: true do |f| 
+                =f.hidden_field :ticket_id, :value => ticket.id
+                =f.hidden_field :user_id, :value => current_user.id 
+                =f.hidden_field :vote_type, :value => "down"
+                =f.submit "v", html:{class:"down_submit", class:"downvote#{down_suffix}"}
           %td
-            = link_to "Delete", ticket, method: :delete, data:{confirm:"Are you sure?"}, id: "delete_ticket_#{ticket.id}" 
+            %div{id:"game_ticket_#{ticket.id}_score"}
+              =ticket.score
+          %td
+            = link_to "#{ticket.name}", ticket
+          %td
+            = ticket.body
+          %td
+            = link_to "#{ticket.user.name}", ticket.user
+          %td
+            = link_to "#{ticket.game.name}", ticket.game
+          %td
+            = ticket.fulfilled.to_s.humanize      
+          %td
+            -if !ticket.fulfilled
+              = ticket.status
+          -if can? :edit, ticket
+            %td
+              = link_to "Edit", edit_ticket_path(ticket), id: "edit_ticket_#{ticket.id}"
+          -if can? :destroy, ticket
+            %td
+              = link_to "Delete", ticket, method: :delete, data:{confirm:"Are you sure?"}, id: "delete_ticket_#{ticket.id}" 

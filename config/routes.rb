@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :guides, only: [:show, :edit, :update, :index, :destroy]
   resources :users
   resources :documents, only: [:edit, :update, :destroy]
+  resources :votes, only: [:show, :new, :create]
   #put index for documents OUTSIDE of game resource
 
   match '/signup',  to: 'users#new',            via: 'get'
@@ -17,5 +18,7 @@ Rails.application.routes.draw do
   match '/signout', to: 'sessions#destroy',     via: 'delete'
 
   match '/control', to: 'users#index',          via: 'get'
+  
+  get '/votes/new', to: 'votes#new'
   
 end

@@ -14,7 +14,10 @@ class TicketsController < ApplicationController
 
   def index
     @tickets = Ticket.all
-    #sort by score (votes)
+    #new vote
+    @vote = Vote.new
+    #take all tickets and sort by score, give as "@tickets"
+    #need to check if indexing game or just all tickets!!
   end
 
   def create

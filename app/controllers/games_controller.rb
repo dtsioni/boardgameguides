@@ -3,7 +3,9 @@ class GamesController < ApplicationController
   before_action :set_game, only:[:show, :destroy, :edit, :update]
   authorize_resource
   skip_authorize_resource only:[:show, :index]
+
   def show
+    @vote = Vote.new
   end
 
   def new
