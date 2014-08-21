@@ -6,6 +6,9 @@ class VotesController < ApplicationController
 
   def create
     @vote = current_user.votes.new(vote_params)
+    @ticket = Ticket.find(params[:ticket_id])
+    #trying to refactory following code to make voting up and voting down work
+
     #if its an upvote, we need to remove previous downvotes
     if @vote.vote_type == "up"
       current_user.votes.each do |vote|
@@ -14,6 +17,10 @@ class VotesController < ApplicationController
         #and if the vote is voting on the same ticket or guide
         if @vote.id != vote.id && vote.vote_type == "down" && @vote.ticket_id == vote.ticket_id
           vote.destroy
+        end
+        if @vote.id != vote.id && vote.vote_type == "up" && @vote.ticket_id == vote.ticket_id
+          vote.destroy
+          @vote.vote_type = "dead"
         end
       end
     end
@@ -27,9 +34,12 @@ class VotesController < ApplicationController
           #destroy vote
           vote.destroy
         end
+        if @vote.id != vote.id && vote.vote_type == "down" && @vote.ticket_id == vote.ticket_id
+          vote.destroy
+          @vote.vote_type = "dead"
+        end
       end
     end
-
     respond_to do |format|
       if @vote.save
         flash[:success] = "Vote successful"
