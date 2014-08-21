@@ -57,15 +57,13 @@
               =form_for @vote, html:{class:"ticket_vote"}, remote: true do |f| 
                 =f.hidden_field :ticket_id, :value => ticket.id
                 =f.hidden_field :user_id, :value => current_user.id 
-                =f.hidden_field :vote_type, :value => "up"                
-                = button_tag(type: 'submit', class: "up_submit upvote#{up_suffix}") do
-                  %span.glyphicon.glyphicon-arrow-up
+                =f.hidden_field :vote_type, :value => "up"
+                =f.submit "^", html:{class:"up_submit", class:"upvote#{up_suffix}"}
               =form_for @vote, html:{class:"ticket_vote"}, remote: true do |f| 
                 =f.hidden_field :ticket_id, :value => ticket.id
                 =f.hidden_field :user_id, :value => current_user.id 
                 =f.hidden_field :vote_type, :value => "down"
-                = button_tag(type: 'submit', class: "down_submit downvote#{down_suffix}") do
-                  %span.glyphicon.glyphicon-arrow-down
+                =f.submit "v", html:{class:"down_submit", class:"downvote#{down_suffix}"}
           %td
             %div{id:"game_ticket_#{ticket.id}_score"}
               =ticket.score
