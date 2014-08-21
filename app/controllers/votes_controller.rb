@@ -12,7 +12,7 @@ class VotesController < ApplicationController
         #if the vote is not the same vote
         #and if the vote is a downvote
         #and if the vote is voting on the same ticket or guide
-        if @vote.id != vote.id && vote.vote_type == "down" && @vote.ticket_id == vote.ticket_id
+        if @vote.id != vote.id && (vote.vote_type == "down" && @vote.ticket_id == vote.ticket_id
           vote.destroy
         end
       end
