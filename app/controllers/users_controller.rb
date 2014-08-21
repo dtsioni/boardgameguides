@@ -18,6 +18,8 @@ class UsersController < ApplicationController
     @games = Game.all
     #tickets partial
     @tickets = Ticket.all
+    #vote needed for index page
+    @vote = Vote.new
   end  
 
   def create
