@@ -2,6 +2,9 @@
 %h1
   %strong
     =@user.name
+-if current_user == @user
+  .center
+    =link_to "Edit Your Account", edit_user_path(@user)
 -if can? :supervise, User
   .center
     =@user.role.humanize
